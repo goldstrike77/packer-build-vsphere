@@ -1,11 +1,3 @@
-#cloud-config
-
-# © Broadcom. All Rights Reserved.
-# The term “Broadcom” refers to Broadcom Inc. and/or its subsidiaries.
-# SPDX-License-Identifier: BSD-2-Clause
-
-# Ubuntu Server 24.04 LTS
-
 autoinstall:
   version: 1
   apt:
@@ -13,9 +5,9 @@ autoinstall:
     preserve_sources_list: false
     primary:
       - arches: [amd64, i386]
-        uri: http://archive.ubuntu.com/ubuntu
+        uri: http://mirrors.aliyun.com/ubuntu
       - arches: [default]
-        uri: http://ports.ubuntu.com/ubuntu-ports
+        uri: http://mirrors.aliyun.com/ubuntu-ports
   early-commands:
     - sudo systemctl stop ssh
   locale: ${vm_guest_os_language}
@@ -24,7 +16,7 @@ autoinstall:
   identity:
     hostname: ubuntu-server
     username: ${build_username}
-    password: ${build_password_encrypted} # mkpasswd -m sha-512
+    password: "${build_password_encrypted}" # openssl passwd -6
   ssh:
     install-server: true
     allow-pw: true
@@ -37,7 +29,6 @@ autoinstall:
     timezone: ${vm_guest_os_timezone}
   late-commands:
     - sed -i -e 's/^#\?PasswordAuthentication.*/PasswordAuthentication yes/g' /target/etc/ssh/sshd_config
-    - sudo systemctl start ssh
     - echo '${build_username} ALL=(ALL) NOPASSWD:ALL' > /target/etc/sudoers.d/${build_username}
     - curtin in-target --target=/target -- chmod 440 /etc/sudoers.d/${build_username}
     - curtin in-target --target=/target -- sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=.*$/GRUB_CMDLINE_LINUX_DEFAULT=""/' /etc/default/grub

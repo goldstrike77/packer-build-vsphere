@@ -26,6 +26,7 @@ artifact = {
     "[ds-san-lun1] ISOs/ubuntu-24.04.4-live-server-amd64.iso"
   ]
   vm_boot_order              = "disk,cdrom"
+  boot_command               = ["<esc><esc><esc><esc>e<wait>", "<del><del><del><del><del><del><del><del>", "<del><del><del><del><del><del><del><del>", "<del><del><del><del><del><del><del><del>", "<del><del><del><del><del><del><del><del>", "<del><del><del><del><del><del><del><del>", "<del><del><del><del><del><del><del><del>", "<del><del><del><del><del><del><del><del>", "<del><del><del><del><del><del><del><del>", "<del><del><del><del><del><del><del><del>", "<del><del><del><del><del><del><del><del>", "<del><del><del><del><del><del><del><del>", "<del><del><del><del><del><del><del><del>", "<del><del><del><del><del><del><del><del>", "<del><del><del><del><del><del><del><del>", "linux /casper/vmlinuz --- autoinstall ds=\"nocloud\"<enter><wait>", "initrd /casper/initrd<enter><wait>", "boot<enter>", "<enter><f10><wait>"]
   vm_boot_wait               = "5s"
   common_shutdown_timeout    = "1h"
   build_username             = "ecsadmin"
@@ -36,7 +37,7 @@ artifact = {
   vm_guest_os_name           = "server"
   vm_guest_os_version        = "24.04-lts"
   communicator_port          = 22
-  communicator_timeout       = "30m"
+  communicator_timeout       = "1h"
   communicator               = "ssh"
   vm_network_device          = "ens192"
   common_template_conversion = true

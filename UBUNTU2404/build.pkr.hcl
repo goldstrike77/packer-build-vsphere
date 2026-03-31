@@ -47,6 +47,7 @@ source "vsphere-iso" "images" {
   tools_upgrade_policy = var.artifact.tools_upgrade_policy
   notes                = "Automate Template Builds by HashiCorp Packer on ${formatdate("YYYY-MM-DD-hh:mm", timestamp())}Z"
   cd_content = {
+    "/meta-data" = file("${abspath(path.root)}/meta-data")
     "/user-data" = templatefile("${abspath(path.root)}/user-data.pkrtpl.hcl", {
       build_username           = var.artifact.build_username
       build_password_encrypted = var.build_password_encrypted
@@ -55,28 +56,11 @@ source "vsphere-iso" "images" {
       vm_guest_os_timezone     = var.artifact.vm_guest_os_timezone
     })
   }
-  cd_label   = var.artifact.cd_label
-  iso_paths  = var.artifact.iso_paths
-  boot_order = var.artifact.vm_boot_order
-  boot_wait  = var.artifact.vm_boot_wait
-  boot_command = [
-    // This waits for 3 seconds, sends the "c" key, and then waits for another 3 seconds. In the GRUB boot loader, this is used to enter command line mode.
-    "<wait3s>c<wait3s>",
-    // This types a command to load the Linux kernel from the specified path with the 'autoinstall' option and the value of the 'data_source_command' local variable.
-    // The 'autoinstall' option is used to automate the installation process.
-    // The 'data_source_command' local variable is used to specify the kickstart data source configured in the common variables.
-    "linux /casper/vmlinuz --- autoinstall ds='nocloud'",
-    // This sends the "enter" key and then waits. This is typically used to execute the command and give the system time to process it.
-    "<enter><wait>",
-    // This types a command to load the initial RAM disk from the specified path.
-    "initrd /casper/initrd",
-    // This sends the "enter" key and then waits. This is typically used to execute the command and give the system time to process it.
-    "<enter><wait>",
-    // This types the "boot" command. This starts the boot process using the loaded kernel and initial RAM disk.
-    "boot",
-    // This sends the "enter" key. This is typically used to execute the command.
-    "<enter>"
-  ]
+  cd_label            = var.artifact.cd_label
+  iso_paths           = var.artifact.iso_paths
+  boot_order          = var.artifact.vm_boot_order
+  boot_wait           = var.artifact.vm_boot_wait
+  boot_command        = var.artifact.boot_command
   shutdown_command    = "echo '${var.build_password}' | sudo -S -E shutdown -P now"
   shutdown_timeout    = var.artifact.common_shutdown_timeout
   communicator        = var.artifact.communicator
