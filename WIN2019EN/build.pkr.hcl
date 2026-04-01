@@ -88,6 +88,6 @@ build {
     restart_timeout = "20m"
   }
   provisioner "windows-shell" {
-    inline = ["%WINDIR%\\system32\\sysprep\\sysprep.exe /unattend:F:\\Autounattend.xml /generalize /quiet /quit"]
+    inline = ["%WINDIR%\\system32\\sysprep\\sysprep.exe /unattend:F:\\Autounattend.xml /generalize /oobe /quiet /quit"]
   }
 }

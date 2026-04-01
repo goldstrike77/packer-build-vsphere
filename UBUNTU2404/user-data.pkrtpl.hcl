@@ -1,9 +1,22 @@
+#cloud-config
+
+# © Broadcom. All Rights Reserved.
+# The term “Broadcom” refers to Broadcom Inc. and/or its subsidiaries.
+# SPDX-License-Identifier: BSD-2-Clause
+
+# Ubuntu Server 24.04 LTS
+
 autoinstall:
   version: 1
   apt:
-    geoip: true
+    geoip: false
     preserve_sources_list: false
     primary:
+      - arches: [amd64, i386]
+        uri: http://mirrors.aliyun.com/ubuntu
+      - arches: [default]
+        uri: http://mirrors.aliyun.com/ubuntu-ports
+    security:
       - arches: [amd64, i386]
         uri: http://mirrors.aliyun.com/ubuntu
       - arches: [default]
@@ -16,7 +29,11 @@ autoinstall:
   identity:
     hostname: ubuntu-server
     username: ${build_username}
-    password: "${build_password_encrypted}" # openssl passwd -6
+    password: "${build_password_encrypted}"
+  storage:
+    layout:
+      name: lvm
+      sizing-policy: all
   ssh:
     install-server: true
     allow-pw: true
