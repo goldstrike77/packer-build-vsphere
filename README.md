@@ -5,3 +5,4 @@ sudo apt-get install xorriso
 
 export PKR_VAR_vcenter_password="****************"
 export PKR_VAR_build_password="****************"
+export PKR_VAR_build_password_encrypted="****************" [openssl passwd -6]

@@ -47,16 +47,18 @@ source "vsphere-iso" "images" {
   tools_upgrade_policy = var.artifact.tools_upgrade_policy
   notes                = "Automate Builds by HashiCorp Packer on ${formatdate("YYYY-MM-DD-hh:mm", timestamp())}Z"
   cd_content = {
-    "/meta-data" = file("${abspath(path.root)}/meta-data")
-    "/user-data" = templatefile("${abspath(path.root)}/user-data.pkrtpl.hcl", {
+    "/ks.cfg" = templatefile("${abspath(path.root)}/ks.pkrtpl.hcl", {
       build_username           = var.artifact.build_username
+      build_password           = var.build_password
       build_password_encrypted = var.build_password_encrypted
       vm_guest_os_language     = var.artifact.vm_guest_os_language
       vm_guest_os_keyboard     = var.artifact.vm_guest_os_keyboard
       vm_guest_os_timezone     = var.artifact.vm_guest_os_timezone
+      vm_guest_os_cloudinit    = var.artifact.vm_guest_os_cloudinit
+      vm_network_device        = var.artifact.vm_network_device
+      vm_disk_device           = var.artifact.vm_disk_device
     })
   }
-  cd_label            = var.artifact.cd_label
   iso_paths           = var.artifact.iso_paths
   boot_order          = var.artifact.vm_boot_order
   boot_wait           = var.artifact.vm_boot_wait
