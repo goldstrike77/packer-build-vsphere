@@ -38,6 +38,7 @@ artifact = {
   vm_guest_os_version        = "24.04-lts"
   communicator_port          = 22
   communicator_timeout       = "1h"
+  common_ip_wait_timeout     = "1h"
   communicator               = "ssh"
   vm_network_device          = "ens192"
   common_template_conversion = true

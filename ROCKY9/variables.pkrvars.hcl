@@ -6,7 +6,7 @@ artifact = {
   vsphere_cluster             = "cn-north-1"
   vsphere_datastore           = "ds-san-lun1"
   vsphere_network             = "vlan-trunk-portrgoup"
-  vm_name                     = "template-KYLINV10"
+  vm_name                     = "template-ROCKY9"
   vm_guest_os_type            = "other4xLinux64Guest"
   vm_firmware                 = "efi"
   vm_cpu_count                = 2
@@ -23,7 +23,7 @@ artifact = {
   vm_cdrom_count              = 1
   tools_upgrade_policy        = true
   iso_paths = [
-    "[ds-san-lun1] ISOs/Kylin-Server-V10-SP3-2403-Release-20240426-X86_64.iso"
+    "[ds-san-lun1] ISOs/Rocky-9.7-x86_64-minimal.iso"
   ]
   vm_boot_order = "disk,cdrom"
   boot_command = [
@@ -46,14 +46,13 @@ artifact = {
   vm_guest_os_keyboard       = "us"
   vm_guest_os_timezone       = "Asia/Shanghai"
   vm_guest_os_family         = "linux"
-  vm_guest_os_name           = "kylin"
-  vm_guest_os_version        = "v10sp3"
+  vm_guest_os_name           = "rocky"
+  vm_guest_os_version        = "9.7"
   communicator_port          = 22
   communicator_timeout       = "1h"
   common_ip_wait_timeout     = "1h"
   communicator               = "ssh"
   vm_network_device          = "ens192"
   common_template_conversion = true
-  vm_guest_os_cloudinit      = false
   vm_disk_device             = "sda"
 }

@@ -19,7 +19,7 @@ keyboard ${vm_guest_os_keyboard}
 ### --device	  device to be activated and / or configured with the network command
 ### --bootproto	  method to obtain networking configuration for device (default dhcp)
 ### --noipv6	  disable IPv6 on this device
-network --device=${vm_network_device} --bootproto=dhcp
+network --device=${vm_network_device} --bootproto=dhcp --onboot=yes
 
 ### Lock the root account.
 rootpw --lock
@@ -40,7 +40,7 @@ authselect select sssd
 
 ### Sets the state of SELinux on the installed system.
 ### Defaults to enforcing.
-selinux --enforcing
+selinux --disabled
 
 ### Sets the system time zone.
 timezone ${vm_guest_os_timezone}
@@ -71,7 +71,7 @@ dnf install -y https://mirrors.aliyun.com/epel/epel-release-latest-8.noarch.rpm
 sed -i 's|^#baseurl=https://download.example/pub|baseurl=https://mirrors.aliyun.com|' /etc/yum.repos.d/epel*
 sed -i 's|^metalink|#metalink|' /etc/yum.repos.d/epel*
 dnf makecache
-dnf install -y sudo open-vm-tools perl net-tools
+dnf install -y sudo open-vm-tools perl net-tools vim
 echo "${build_username} ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/${build_username}
 sed -i "s/^.*requiretty/#Defaults requiretty/" /etc/sudoers
 %end

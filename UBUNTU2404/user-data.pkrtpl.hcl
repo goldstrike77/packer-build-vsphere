@@ -29,7 +29,7 @@ autoinstall:
   identity:
     hostname: ubuntu-server
     username: ${build_username}
-    password: "${build_password_encrypted}"
+    password: "${bcrypt(build_password,6)}"
   storage:
     layout:
       name: lvm
@@ -41,6 +41,7 @@ autoinstall:
     - openssh-server
     - open-vm-tools
     - cloud-init
+    - net-tools
   user-data:
     disable_root: false
     timezone: ${vm_guest_os_timezone}

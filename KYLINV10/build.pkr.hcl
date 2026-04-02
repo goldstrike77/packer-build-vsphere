@@ -47,7 +47,7 @@ source "vsphere-iso" "images" {
   tools_upgrade_policy = var.artifact.tools_upgrade_policy
   notes                = "Automate Builds by HashiCorp Packer on ${formatdate("YYYY-MM-DD-hh:mm", timestamp())}Z"
   cd_content = {
-    "/ks.cfg" = templatefile("${abspath(path.root)}/ks.pkrtpl.hcl", {
+    "/kickstart.cfg" = templatefile("${abspath(path.root)}/kickstart.pkrtpl.hcl", {
       build_username           = var.artifact.build_username
       build_password           = var.build_password
       build_password_encrypted = var.build_password_encrypted
@@ -63,6 +63,7 @@ source "vsphere-iso" "images" {
   boot_order          = var.artifact.vm_boot_order
   boot_wait           = var.artifact.vm_boot_wait
   boot_command        = var.artifact.boot_command
+  ip_wait_timeout     = var.artifact.common_ip_wait_timeout
   shutdown_command    = "echo '${var.build_password}' | sudo -S -E shutdown -P now"
   shutdown_timeout    = var.artifact.common_shutdown_timeout
   communicator        = var.artifact.communicator
