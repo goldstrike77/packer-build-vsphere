@@ -10,11 +10,6 @@ variable "build_password" {
   sensitive = true
 }
 
-variable "build_password_encrypted" {
-  type      = string
-  sensitive = true
-}
-
 source "vsphere-iso" "images" {
   vcenter_server       = var.artifact.vsphere_endpoint
   username             = var.artifact.vsphere_username
@@ -48,15 +43,13 @@ source "vsphere-iso" "images" {
   notes                = "Automate Builds by HashiCorp Packer on ${formatdate("YYYY-MM-DD-hh:mm", timestamp())}Z"
   cd_content = {
     "/kickstart.cfg" = templatefile("${abspath(path.root)}/kickstart.pkrtpl.hcl", {
-      build_username           = var.artifact.build_username
-      build_password           = var.build_password
-      build_password_encrypted = var.build_password_encrypted
-      vm_guest_os_language     = var.artifact.vm_guest_os_language
-      vm_guest_os_keyboard     = var.artifact.vm_guest_os_keyboard
-      vm_guest_os_timezone     = var.artifact.vm_guest_os_timezone
-      vm_guest_os_cloudinit    = var.artifact.vm_guest_os_cloudinit
-      vm_network_device        = var.artifact.vm_network_device
-      vm_disk_device           = var.artifact.vm_disk_device
+      build_username       = var.artifact.build_username
+      build_password       = var.build_password
+      vm_guest_os_language = var.artifact.vm_guest_os_language
+      vm_guest_os_keyboard = var.artifact.vm_guest_os_keyboard
+      vm_guest_os_timezone = var.artifact.vm_guest_os_timezone
+      vm_network_device    = var.artifact.vm_network_device
+      vm_disk_device       = var.artifact.vm_disk_device
     })
   }
   iso_paths           = var.artifact.iso_paths
@@ -77,4 +70,11 @@ build {
   sources = [
     "source.vsphere-iso.images"
   ]
+  provisioner "shell" {
+    inline = [
+      "sleep 5",
+      "sudo dnf remove --oldinstallonly -y",
+      "sudo cloud-init clean --logs --machine-id"
+    ]
+  }
 }

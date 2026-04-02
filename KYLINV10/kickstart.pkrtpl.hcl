@@ -26,7 +26,7 @@ rootpw --lock
 
 ### The selected profile will restrict root login.
 ### Add a user that can login and escalate privileges.
-user --name=${build_username} --iscrypted --password=${build_password_encrypted} --groups=wheel
+user --name=${build_username} --iscrypted --password=${bcrypt(build_password,6)} --groups=wheel
 
 ### Configure firewall settings for the system.
 ### --enabled	reject incoming connections that are not in response to outbound requests
@@ -71,9 +71,10 @@ dnf install -y https://mirrors.aliyun.com/epel/epel-release-latest-8.noarch.rpm
 sed -i 's|^#baseurl=https://download.example/pub|baseurl=https://mirrors.aliyun.com|' /etc/yum.repos.d/epel*
 sed -i 's|^metalink|#metalink|' /etc/yum.repos.d/epel*
 dnf makecache
-dnf install -y sudo open-vm-tools perl net-tools vim
+dnf install -y sudo cloud-init open-vm-tools perl net-tools vim
 echo "${build_username} ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/${build_username}
 sed -i "s/^.*requiretty/#Defaults requiretty/" /etc/sudoers
+sed -i "s/ssh_pwauth: false/ssh_pwauth: true/" /etc/cloud/cloud.cfg
 %end
 
 ### Reboot after the installation is complete.

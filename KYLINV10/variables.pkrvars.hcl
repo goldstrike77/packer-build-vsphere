@@ -54,6 +54,5 @@ artifact = {
   communicator               = "ssh"
   vm_network_device          = "ens192"
   common_template_conversion = true
-  vm_guest_os_cloudinit      = false
   vm_disk_device             = "sda"
 }

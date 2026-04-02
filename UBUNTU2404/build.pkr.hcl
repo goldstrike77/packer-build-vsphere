@@ -70,4 +70,10 @@ build {
   sources = [
     "source.vsphere-iso.images"
   ]
+  provisioner "shell" {
+    inline = [
+      "sleep 5",
+      "sudo cloud-init clean --logs --machine-id"
+    ]
+  }
 }

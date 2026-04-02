@@ -74,7 +74,7 @@ build {
     inline = [
       "sleep 5",
       "sudo dnf remove --oldinstallonly -y",
-      "sudo cloud-init clean"
+      "sudo cloud-init clean --logs --machine-id"
     ]
   }
 }
