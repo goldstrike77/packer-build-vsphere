@@ -77,17 +77,27 @@ build {
     "source.vsphere-iso.images"
   ]
   provisioner "windows-update" {
-    search_criteria = "BrowseOnly=0 and IsInstalled=0"
+    pause_before    = "60s"
+    search_criteria = "IsInstalled=0"
     filters = [
+      "exclude:$_.Title -like '*VMware*'",
       "exclude:$_.Title -like '*Preview*'",
-      "include:$true",
+      "exclude:$_.Title -like '*Defender*'",
+      "exclude:$_.InstallationBehavior.CanRequestUserInput",
+      "include:$true"
     ]
-    update_limit = 25
+    restart_timeout = "120m"
+  }
+  provisioner "powershell" {
+    inline = [
+      "Start-Sleep -Seconds 60"
+    ]
   }
   provisioner "windows-restart" {
-    restart_timeout = "20m"
+    restart_check_command = "echo restarted"
+    restart_timeout       = "20m"
   }
   provisioner "windows-shell" {
-    inline = ["%WINDIR%\\system32\\sysprep\\sysprep.exe /unattend:F:\\Autounattend.xml /generalize /oobe /quiet /quit"]
+    inline = ["%WINDIR%\\system32\\sysprep\\sysprep.exe /unattend:F:\\Autounattend.xml /generalize /quiet /quit"]
   }
 }

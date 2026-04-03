@@ -73,6 +73,7 @@ build {
   provisioner "shell" {
     inline = [
       "sleep 5",
+      "echo 'disable_vmware_customization: false' | sudo tee -a /etc/cloud/cloud.cfg",
       "sudo cloud-init clean --logs --machine-id"
     ]
   }
