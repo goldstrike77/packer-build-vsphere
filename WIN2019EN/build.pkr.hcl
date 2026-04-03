@@ -86,18 +86,9 @@ build {
       "exclude:$_.InstallationBehavior.CanRequestUserInput",
       "include:$true"
     ]
-    restart_timeout = "120m"
-  }
-  provisioner "powershell" {
-    inline = [
-      "Start-Sleep -Seconds 60"
-    ]
+    restart_timeout = "60m"
   }
   provisioner "windows-restart" {
-    restart_check_command = "echo restarted"
-    restart_timeout       = "20m"
-  }
-  provisioner "windows-shell" {
-    inline = ["%WINDIR%\\system32\\sysprep\\sysprep.exe /unattend:F:\\Autounattend.xml /generalize /quiet /quit"]
+    restart_timeout = "20m"
   }
 }
