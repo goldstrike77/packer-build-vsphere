@@ -67,14 +67,11 @@ skipx
 ### Post-installation commands.
 %post
 dnf update -y
-dnf install -y https://mirrors.aliyun.com/epel/epel-release-latest-8.noarch.rpm
-sed -i 's|^#baseurl=https://download.example/pub|baseurl=https://mirrors.aliyun.com|' /etc/yum.repos.d/epel*
-sed -i 's|^metalink|#metalink|' /etc/yum.repos.d/epel*
-dnf makecache
-dnf install -y sudo cloud-init open-vm-tools perl net-tools vim
+dnf install -y sudo cloud-init cloud-utils-growpart open-vm-tools perl net-tools vim
 echo "${build_username} ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/${build_username}
 sed -i "s/^.*requiretty/#Defaults requiretty/" /etc/sudoers
-sed -i "s/ssh_pwauth: false/ssh_pwauth: true/" /etc/cloud/cloud.cfg
+sed -i "s/ssh_pwauth:   0/ssh_pwauth: 1/" /etc/cloud/cloud.cfg
+sudo grubby --update-kernel=ALL --remove-args="rhgb quiet"
 %end
 
 ### Reboot after the installation is complete.
