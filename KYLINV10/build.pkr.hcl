@@ -74,7 +74,9 @@ build {
     inline = [
       "sleep 5",
       "sudo dnf remove --oldinstallonly -y",
-      "sudo cloud-init clean"
+      "sudo cloud-init clean",
+      "rm /etc/udev/rules.d/70-persistent-net.rules",
+      "rm /etc/sysconfig/network-scripts/ifcfg-${var.artifact.vm_network_device}"
     ]
   }
 }
