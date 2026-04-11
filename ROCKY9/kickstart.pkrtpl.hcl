@@ -70,7 +70,7 @@ dnf update -y
 dnf install -y https://mirrors.aliyun.com/epel/epel-release-latest-9.noarch.rpm
 sed -i 's|^#baseurl=https://download.example/pub|baseurl=https://mirrors.aliyun.com|' /etc/yum.repos.d/epel*
 sed -i 's|^metalink|#metalink|' /etc/yum.repos.d/epel*
-dnf install -y sudo cloud-init open-vm-tools perl net-tools vim
+dnf install -y sudo cloud-init open-vm-tools perl net-tools vim lvm2
 echo "${build_username} ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/${build_username}
 sed -i "s/^.*requiretty/#Defaults requiretty/" /etc/sudoers
 sed -i "s/ssh_pwauth: false/ssh_pwauth: true/" /etc/cloud/cloud.cfg
