@@ -6,7 +6,7 @@ artifact = {
   vsphere_cluster             = "cn-north-1"
   vsphere_datastore           = "ds-san-lun1"
   vsphere_network             = "vlan-trunk-portrgoup"
-  vm_name                     = "template-WIN2019EN"
+  vm_name                     = "template-WIN2019"
   vm_guest_os_type            = "windows2019srv_64Guest"
   vm_firmware                 = "efi-secure"
   vm_cpu_count                = 4
@@ -22,9 +22,13 @@ artifact = {
   common_remove_cdrom         = true
   vm_cdrom_count              = 1
   tools_upgrade_policy        = true
-  iso_paths = [
-    "[ds-san-lun1] ISOs/SW_DVD9_Win_Server_DE_2019_64Bit_English_DC_STD_sysin_202603.iso",
-    "[ds-san-lun1] ISOs/VMware-tools-windows-13.0.10-25056151.iso"
+  iso_paths_cn = [
+    "[ds-san-lun1] ISOs/SW_DVD9_Win_Server_DE_2019_64Bit_ChnSimp_DC_STD.iso",
+    "[ds-san-lun1] ISOs/VMware-tools-windows-13.1.0-25218885.iso"
+  ]
+  iso_paths_en = [
+    "[ds-san-lun1] ISOs/SW_DVD9_Win_Server_DE_2019_64Bit_English_DC_STD.iso",
+    "[ds-san-lun1] ISOs/VMware-tools-windows-13.1.0-25218885.iso"
   ]
   vm_boot_order                     = "disk,cdrom"
   vm_boot_wait                      = "2s"
@@ -33,11 +37,13 @@ artifact = {
   common_shutdown_timeout           = "1h"
   build_username                    = "administrator"
   vm_inst_os_eval                   = false
-  vm_inst_os_language               = "en-US"
+  vm_inst_os_language_en            = "en-US"
+  vm_inst_os_language_cn            = "zh_CN"
   vm_inst_os_keyboard               = "en-US"
   vm_inst_os_image_standard_desktop = "Windows Server 2019 SERVERSTANDARD"
   vm_inst_os_key                    = "N69G4-B89J2-4G8F4-WWYCC-J464C"
-  vm_guest_os_language              = "en-US"
+  vm_guest_os_language_en           = "en-US"
+  vm_guest_os_language_cn           = "zh_CN"
   vm_guest_os_keyboard              = "en-US"
   vm_guest_os_timezone              = "UTC"
   vm_guest_os_family                = "windows"
