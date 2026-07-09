@@ -74,6 +74,11 @@ dnf install -y sudo cloud-init open-vm-tools perl net-tools vim lvm2
 echo "${build_username} ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/${build_username}
 sed -i "s/^.*requiretty/#Defaults requiretty/" /etc/sudoers
 sed -i "s/ssh_pwauth: false/ssh_pwauth: true/" /etc/cloud/cloud.cfg
+mkdir /home/${build_username}/.ssh
+echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDGu7vHIsAdqA2vMnENL/Ma97OgRp8tIKf+7yVxr6iGgVzUaR+Izp2OaDUe8NFvyWhU3GvpHwpkL5cEoKM+lnranJuBVIFU9Ggdpe18Hek/ZwERM8+v0oY1TJp9xDt1vVnNAq4YxdLMmYVQ8DWNB18Lz1NNDiDQMipIvs2DF631CHKH1dVKtwcU2aLAsnzhMp+PkW21yFkLEkXc2UfndEwC0X7+GRwp4hzlhDMC9F6wAZBeyq1/Ph71kjHBW39dRuh9YXrGH6j+Sf9z94q1RjLFiSgZ8AVkS0CCMhbsVZ5sbMpY9vMmHvxxGizGAzvFxnc8KQ+66yLpaNNTS1QJj4k6vBeHfW3Pezi7WgEFqJD4nBBej2woqRoT4pxnH/1FXAwGCPih62OsPmfgqFInhFOjJhZCAjsDtBT4iBATpEnicQjiyIau+sRIzSjQ1FMyWVsfp3NsHYWlk8XP0Wp6H3nzVkZEq8MTlhxQxEzu7LlgdgtFVE+P5ChhTHvxP3Cly/RepwVdKUPiNN9QnZdpD8KZnUHdtZKfgsCP1NvLUE3hUEhaSvL5fwL0pK06g8tYF8jSFmw81psemOtZAQ0iHYnZWPbgnR122fbo4PYEKgG12i6WSJ52MrD5cG8CAy5U5AuEV5vHEagG0qksIEl8hioRBrI0jYQ6SeeQmPOjaXyL9Q==" >> /home/${build_username}/.ssh/authorized_keys
+chown -R ${build_username}:${build_username} /home/${build_username}/.ssh
+chmod 700 /home/${build_username}/.ssh
+chmod 600 /home/${build_username}/.ssh/authorized_keys
 %end
 
 ### Reboot after the installation is complete.

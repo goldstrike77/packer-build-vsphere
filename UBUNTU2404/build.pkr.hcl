@@ -74,6 +74,7 @@ build {
     inline = [
       "sleep 5",
       "echo 'disable_vmware_customization: false' | sudo tee -a /etc/cloud/cloud.cfg",
+      "echo 'allow_userdata: false' | sudo tee -a /etc/cloud/cloud.cfg",
       "sudo cloud-init clean --logs --machine-id"
     ]
   }
